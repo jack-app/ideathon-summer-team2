@@ -2,6 +2,8 @@ import 'dart:html';
 import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class EventRegisterWidget extends StatelessWidget {
   @override
@@ -200,7 +202,7 @@ class _EventRegisterPageState extends State<EventRegisterPage> {
         ),
 
         Column(children: <Widget>[
-          // テキスト入力
+          // 名前のフォーム
           TextFormField(
             // コントローラー
             controller: _memberNameController,
@@ -215,6 +217,8 @@ class _EventRegisterPageState extends State<EventRegisterPage> {
             },
           ),
           const SizedBox(height: 8),
+
+          // 金額のフォーム
           TextFormField(
             // コントローラー
             controller: _memberPaymentController,
@@ -231,6 +235,8 @@ class _EventRegisterPageState extends State<EventRegisterPage> {
             },
           ),
           const SizedBox(height: 8),
+
+          // 支払期限のフォーム
           FormLabelText('支払期限'),
           Row(
             children: <Widget>[
@@ -257,60 +263,76 @@ class _EventRegisterPageState extends State<EventRegisterPage> {
             color: Colors.grey,
           ),
 
+          // 注意書きのテキスト
           Text(
             FormExceptionText,
             style: TextStyle(
               color: Colors.red,
             ),
           ),
+
+          // メンバーを追加するボタン
+          IconButton(
+            icon: const Icon(Icons.add),
+            tooltip: 'メンバー追加',
+            onPressed: () {
+              if (newMemberName != "" && newMemberPaymentStr != "") {
+                try {
+                  setState(() {
+                    // メンバーの追加
+                    memberList.add({
+                      'name': newMemberName, // 名前
+                      'payment': int.parse(newMemberPaymentStr), // 支払金額
+                      'deadline': newMemberDeadline,
+                    });
+                    // 新しいメンバーの値を初期化
+                    newMemberName = "";
+                    newMemberPaymentStr = "";
+                    newMemberDeadline = DateTime.now();
+                    FormExceptionText = "";
+                  });
+                  // テキストフィールドの入力を削除
+                  _memberNameController.clear();
+                  _memberPaymentController.clear();
+                } catch (e) {
+                  setState(() {
+                    //例外が発生したら実行する処理
+                    FormExceptionText = "金額は数字で入力してください";
+                  });
+                }
+              } else if (newMemberName != "") {
+                setState(() {
+                  //例外が発生したら実行する処理
+                  FormExceptionText = "金額が未入力です";
+                });
+              } else if (newMemberPaymentStr != "") {
+                setState(() {
+                  //例外が発生したら実行する処理
+                  FormExceptionText = "名前が未入力です";
+                });
+              } else {
+                setState(() {
+                  //例外が発生したら実行する処理
+                  FormExceptionText = "名前・金額が未入力です";
+                });
+              }
+            },
+          ),
+
+          // イベント登録ボタン
+          IconButton(
+            icon: const Icon(Icons.send),
+            tooltip: 'イベント登録',
+            onPressed: () async {
+              // ドキュメント作成
+              await FirebaseFirestore.instance
+                  .collection('events') // コレクションID
+                  .doc(EventName) // ドキュメントID
+                  .set({'name': '鈴木', 'age': 40}); // データ
+            },
+          ),
         ])
       ]),
-
-      // メンバーを追加するボタン
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          if (newMemberName != "" && newMemberPaymentStr != "") {
-            try {
-              setState(() {
-                // メンバーの追加
-                memberList.add({
-                  'name': newMemberName, // 名前
-                  'payment': int.parse(newMemberPaymentStr), // 支払金額
-                  'deadline': newMemberDeadline,
-                });
-                // 新しいメンバーの値を初期化
-                newMemberName = "";
-                newMemberPaymentStr = "";
-                newMemberDeadline = DateTime.now();
-              });
-              // テキストフィールドの入力を削除
-              _memberNameController.clear();
-              _memberPaymentController.clear();
-            } catch (e) {
-              setState(() {
-                //例外が発生したら実行する処理
-                FormExceptionText = "金額は数字で入力してください";
-              });
-            }
-          } else if (newMemberName != "") {
-            setState(() {
-              //例外が発生したら実行する処理
-              FormExceptionText = "金額が未入力です";
-            });
-          } else if (newMemberPaymentStr != "") {
-            setState(() {
-              //例外が発生したら実行する処理
-              FormExceptionText = "名前が未入力です";
-            });
-          } else {
-            setState(() {
-              //例外が発生したら実行する処理
-              FormExceptionText = "名前・金額が未入力です";
-            });
-          }
-        },
-        child: Icon(Icons.add),
-      ),
     );
   }
 }
