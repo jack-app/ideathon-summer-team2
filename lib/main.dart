@@ -7,7 +7,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'お金集めるんです',
       theme: ThemeData(
-        primarySwatch: Colors.blue,),
+        primarySwatch: Colors.grey,),
       home: TitlePage(),
     );
   }
@@ -36,7 +36,7 @@ class TitlePage extends StatelessWidget {
               width: 200, //横幅
               height: 50, //高さ
               child: ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: Colors.blue,),
+                style: ElevatedButton.styleFrom(primary: Colors.grey,),
                 onPressed: () {
                   Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) {
@@ -47,6 +47,7 @@ class TitlePage extends StatelessWidget {
               ),
             ),
           ),
+        
           //イベント登録画面
           Container(
             margin: EdgeInsets.all(40),
@@ -54,7 +55,7 @@ class TitlePage extends StatelessWidget {
               width: 200, //横幅
               height: 50, //高さ
               child: ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: Colors.blue,),
+                style: ElevatedButton.styleFrom(primary: Colors.grey,),
                 onPressed: () {},
                 child: Text('イベント登録', style: TextStyle(color: Colors.white)),
             ),
@@ -86,10 +87,9 @@ class HomePage extends StatelessWidget {
             Container(
               height: 400,
               margin: EdgeInsets.all(40),
-              color: Colors.blue,
+              color: Colors.grey,
               child:ListView(
                 children: <Widget>[
-                  
                   Card(
                     child: ListTile(
                       title: Text('1/3:ほげほげ'),
@@ -121,7 +121,7 @@ class HomePage extends StatelessWidget {
                 width: 200, //横幅
                 height: 50, //高さ
                 child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(primary: Colors.blue,),
+                  style: ElevatedButton.styleFrom(primary: Colors.grey,),
                   onPressed: () { // ここで遷移先の画面を指定　
                   },
                   child: Text('イベント新規登録', style: TextStyle(color: Colors.white)),
