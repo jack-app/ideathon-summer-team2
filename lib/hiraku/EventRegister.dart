@@ -4,22 +4,11 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class EventRegisterWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      // アプリ名
-      title: 'イベント登録',
-      theme: ThemeData(
-        // テーマカラー
-        primarySwatch: Colors.blue,
-      ),
-      // リスト一覧画面を表示
-      home: EventRegisterPage(),
-    );
-  }
-}
+import 'package:provider/provider.dart';
+
+import 'RandomString.dart';
 
 class FormLabelText extends Container {
   FormLabelText(String titleText)
@@ -38,29 +27,39 @@ class FormLabelText extends Container {
 
 // リスト一覧画面用Widget
 class EventRegisterPage extends StatefulWidget {
+  // 画面遷移元からのデータを受け取る変数
+  final String UserID;
+
+  // コンストラクタ
+  const EventRegisterPage({Key? key, required this.UserID}) : super(key: key);
+
   @override
   _EventRegisterPageState createState() => _EventRegisterPageState();
 }
 
 class _EventRegisterPageState extends State<EventRegisterPage> {
+  // 入力されたテキストをデータとして持つ
+  late String _UserID;
+
+  @override
+  void initState() {
+    super.initState();
+    // 受け取ったデータを状態を管理する変数に格納
+    _UserID = widget.UserID;
+  }
+
   // State
   // イベントの名前
   String EventName = '';
   // イベントの日程
   var EventDate = DateTime.now();
   // 参加メンバーのリスト
-  List<Map> memberList = [];
-  // メンバー情報の初期値
-  var member = {
-    'name': 'test', // 名前
-    'payment': 0, // 支払金額
-    'deadline': DateTime.now(), // 期限
-  };
+  List<Map> MemberList = [];
 
   // 新規メンバーの値
-  var newMemberName = "";
-  var newMemberPaymentStr = "";
-  var newMemberDeadline = DateTime.now();
+  var NewMemberName = "";
+  var NewMemberPaymentStr = "";
+  var NewMemberDeadline = DateTime.now();
 
   // エラー文
   var FormExceptionText = "";
@@ -87,12 +86,12 @@ class _EventRegisterPageState extends State<EventRegisterPage> {
   _DeadlinePicker(BuildContext context) async {
     final DateTime? datePicked = await showDatePicker(
         context: context,
-        initialDate: newMemberDeadline,
+        initialDate: NewMemberDeadline,
         firstDate: DateTime(2003),
         lastDate: DateTime(2023));
-    if (datePicked != null && datePicked != newMemberDeadline) {
+    if (datePicked != null && datePicked != NewMemberDeadline) {
       setState(() {
-        newMemberDeadline = datePicked;
+        NewMemberDeadline = datePicked;
       });
     }
   }
@@ -103,6 +102,7 @@ class _EventRegisterPageState extends State<EventRegisterPage> {
   @override
   Widget build(BuildContext context) {
     var _size = MediaQuery.of(context).size;
+
     return Scaffold(
       // AppBarを表示し、タイトルも設定
       appBar: AppBar(
@@ -168,15 +168,15 @@ class _EventRegisterPageState extends State<EventRegisterPage> {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
 
-          itemCount: memberList.length,
+          itemCount: MemberList.length,
           itemBuilder: (context, index) {
             return Card(
               child: ListTile(
-                title: Text(memberList[index]['name'] +
+                title: Text(MemberList[index]['name'] +
                     '   ' +
-                    memberList[index]['payment'].toString() +
+                    MemberList[index]['payment'].toString() +
                     '円   期限:' +
-                    outputFormat.format(memberList[index]['deadline'])),
+                    outputFormat.format(MemberList[index]['deadline'])),
 
                 //右側にボタンを配置
                 trailing: Row(
@@ -189,7 +189,7 @@ class _EventRegisterPageState extends State<EventRegisterPage> {
                       onPressed: () {
                         setState(() {
                           // リスト削除
-                          memberList.removeAt(index);
+                          MemberList.removeAt(index);
                         });
                       },
                       icon: Icon(Icons.delete),
@@ -212,7 +212,7 @@ class _EventRegisterPageState extends State<EventRegisterPage> {
             decoration: InputDecoration(labelText: "名前"),
             onChanged: (String value) {
               setState(() {
-                newMemberName = value;
+                NewMemberName = value;
               });
             },
           ),
@@ -230,7 +230,7 @@ class _EventRegisterPageState extends State<EventRegisterPage> {
             decoration: InputDecoration(labelText: "金額"),
             onChanged: (String value) {
               setState(() {
-                newMemberPaymentStr = value;
+                NewMemberPaymentStr = value;
               });
             },
           ),
@@ -253,7 +253,7 @@ class _EventRegisterPageState extends State<EventRegisterPage> {
                   },
                   child: Align(
                     alignment: Alignment.centerLeft,
-                    child: Text(outputFormat.format(newMemberDeadline),
+                    child: Text(outputFormat.format(NewMemberDeadline),
                         textAlign: TextAlign.left),
                   )),
             ],
@@ -276,19 +276,19 @@ class _EventRegisterPageState extends State<EventRegisterPage> {
             icon: const Icon(Icons.add),
             tooltip: 'メンバー追加',
             onPressed: () {
-              if (newMemberName != "" && newMemberPaymentStr != "") {
+              if (NewMemberName != "" && NewMemberPaymentStr != "") {
                 try {
                   setState(() {
                     // メンバーの追加
-                    memberList.add({
-                      'name': newMemberName, // 名前
-                      'payment': int.parse(newMemberPaymentStr), // 支払金額
-                      'deadline': newMemberDeadline,
+                    MemberList.add({
+                      'name': NewMemberName, // 名前
+                      'payment': int.parse(NewMemberPaymentStr), // 支払金額
+                      'deadline': NewMemberDeadline,
                     });
                     // 新しいメンバーの値を初期化
-                    newMemberName = "";
-                    newMemberPaymentStr = "";
-                    newMemberDeadline = DateTime.now();
+                    NewMemberName = "";
+                    NewMemberPaymentStr = "";
+                    NewMemberDeadline = DateTime.now();
                     FormExceptionText = "";
                   });
                   // テキストフィールドの入力を削除
@@ -300,12 +300,12 @@ class _EventRegisterPageState extends State<EventRegisterPage> {
                     FormExceptionText = "金額は数字で入力してください";
                   });
                 }
-              } else if (newMemberName != "") {
+              } else if (NewMemberName != "") {
                 setState(() {
                   //例外が発生したら実行する処理
                   FormExceptionText = "金額が未入力です";
                 });
-              } else if (newMemberPaymentStr != "") {
+              } else if (NewMemberPaymentStr != "") {
                 setState(() {
                   //例外が発生したら実行する処理
                   FormExceptionText = "名前が未入力です";
@@ -319,16 +319,38 @@ class _EventRegisterPageState extends State<EventRegisterPage> {
             },
           ),
 
+          const SizedBox(height: 30),
+
           // イベント登録ボタン
           IconButton(
             icon: const Icon(Icons.send),
             tooltip: 'イベント登録',
             onPressed: () async {
+              String EventDocID = generateNonce(20);
               // ドキュメント作成
               await FirebaseFirestore.instance
                   .collection('events') // コレクションID
-                  .doc(EventName) // ドキュメントID
-                  .set({'name': '鈴木', 'age': 40}); // データ
+                  .doc(EventDocID) // ドキュメントID
+                  .set({
+                'author': _UserID,
+                'name': EventName,
+                'date': EventDate,
+              }); // データ
+
+              for (var index = 0; index < MemberList.length; index++) {
+                await FirebaseFirestore.instance
+                    .collection('events')
+                    .doc(EventDocID)
+                    .collection('participants')
+                    .doc()
+                    .set({
+                  'deadline': MemberList[index]['deadline'],
+                  'money': MemberList[index]['payment'],
+                  'name': MemberList[index]['name'],
+                });
+              }
+              // 1つ前の画面に戻る
+              Navigator.of(context).pop();
             },
           ),
         ])
