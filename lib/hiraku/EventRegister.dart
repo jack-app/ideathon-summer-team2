@@ -1,6 +1,6 @@
 import 'dart:html';
+import '../main.dart';
 import 'package:intl/intl.dart';
-
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -28,27 +28,11 @@ class FormLabelText extends Container {
 
 // リスト一覧画面用Widget
 class EventRegisterPage extends StatefulWidget {
-  // 画面遷移元からのデータを受け取る変数
-  final String UserID;
-
-  // コンストラクタ
-  const EventRegisterPage({Key? key, required this.UserID}) : super(key: key);
-
   @override
   _EventRegisterPageState createState() => _EventRegisterPageState();
 }
 
 class _EventRegisterPageState extends State<EventRegisterPage> {
-  // 入力されたテキストをデータとして持つ
-  late String _UserID;
-
-  @override
-  void initState() {
-    super.initState();
-    // 受け取ったデータを状態を管理する変数に格納
-    _UserID = widget.UserID;
-  }
-
   // State
   // イベントの名前
   String EventName = '';
@@ -78,6 +62,8 @@ class _EventRegisterPageState extends State<EventRegisterPage> {
   @override
   Widget build(BuildContext context) {
     var _size = MediaQuery.of(context).size;
+    final UserState userState = Provider.of<UserState>(context);
+    final User user = userState.user!;
 
     return Scaffold(
       // AppBarを表示し、タイトルも設定
@@ -161,7 +147,6 @@ class _EventRegisterPageState extends State<EventRegisterPage> {
                                     MaterialPageRoute(builder: (context) {
                                       // 遷移先の画面としてリスト追加画面を指定
                                       return MemberRegisterPage(
-                                          UserID: _UserID,
                                           EventName: EventName,
                                           EventDate: EventDate);
                                     }),
