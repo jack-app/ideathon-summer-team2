@@ -66,6 +66,16 @@ class EventListPage extends StatelessWidget {
                                   title: Text(document['name']),
                                   subtitle: Text(DateFormat.yMMMd('ja')
                                       .format(document['date'].toDate())),
+                                  trailing: IconButton(
+                                    icon: Icon(Icons.delete),
+                                    onPressed: () async {
+                                      // 投稿メッセージのドキュメントを削除
+                                      await FirebaseFirestore.instance
+                                          .collection('events')
+                                          .doc(document.id)
+                                          .delete();
+                                    },
+                                  ),
                                 ),
                               )));
                     }).toList(),
