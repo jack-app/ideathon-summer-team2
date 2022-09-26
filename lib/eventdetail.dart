@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'main.dart';
+import 'eventlist.dart';
 
 class EventDetail extends StatelessWidget {
   final String eventid;
@@ -63,7 +64,7 @@ class EventDetail extends StatelessWidget {
             onPressed: () async {
               await Navigator.of(context).pushReplacement(
                 MaterialPageRoute(builder: (context) {
-                  return MyHomePage();
+                  return EventListPage();
                 }),
               );
             },

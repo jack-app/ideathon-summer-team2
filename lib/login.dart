@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'main.dart';
+import 'eventlist.dart';
 
 class LoginCheck extends StatefulWidget {
   LoginCheck({Key? key}) : super(key: key);
@@ -26,7 +27,7 @@ class _LoginCheckState extends State<LoginCheck> {
       userState.setUser(currentUser);
       await Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) {
-          return MyHomePage();
+          return EventListPage();
         }),
       );
     }
@@ -144,7 +145,7 @@ class _LoginPageState extends State<LoginPage> {
                         // チャット画面に遷移＋ログイン画面を破棄
                         await Navigator.of(context).pushReplacement(
                           MaterialPageRoute(builder: (context) {
-                            return MyHomePage();
+                            return EventListPage();
                           }),
                         );
                       } catch (e) {
@@ -177,7 +178,7 @@ class _LoginPageState extends State<LoginPage> {
                       // チャット画面に遷移＋ログイン画面を破棄
                       await Navigator.of(context).pushReplacement(
                         MaterialPageRoute(builder: (context) {
-                          return MyHomePage();
+                          return EventListPage();
                         }),
                       );
                     } catch (e) {

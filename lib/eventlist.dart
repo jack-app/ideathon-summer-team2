@@ -7,6 +7,8 @@ import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'main.dart';
 import 'eventdetail.dart';
+// 作成したウィジェットのインポート
+import 'hiraku/EventRegister.dart';
 
 // リスト一覧画面用Widget
 class EventListPage extends StatelessWidget {
@@ -26,7 +28,7 @@ class EventListPage extends StatelessWidget {
             child: StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
                   .collection('events')
-                  .where('auther', isEqualTo: user.uid)
+                  .where('author', isEqualTo: user.uid)
                   .snapshots(),
               builder: (context, snapshot) {
                 // データが取得できた場合
@@ -62,7 +64,18 @@ class EventListPage extends StatelessWidget {
                 );
               },
             ),
-          )
+          ),
+          ElevatedButton(
+            child: Text('イベント追加'),
+            onPressed: () async {
+              await Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) {
+                  // 遷移先の画面としてリスト追加画面を指定
+                  return EventRegisterPage(UserID: user.uid);
+                }),
+              );
+            },
+          ),
         ]));
   }
 }
