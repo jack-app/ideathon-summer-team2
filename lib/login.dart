@@ -14,9 +14,8 @@ class CreateAcount extends StatelessWidget {
             //タイトル
             Container(
               margin: EdgeInsets.symmetric(
-                vertical: 200.0,
-                horizontal: 20.0,),
-              child:Text('アカウント作成',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 36)),),
+                vertical: 100.0,),
+              child:Text('アカウント作成',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 26)),),
             
             //ユーザー入力
             TextFormField(
