@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'eventdetail.dart';
+
+
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'login.dart';
 import 'config/config.dart';
+import 'eventlist.dart';
+import 'eventdetail.dart';
 
 // 作成したウィジェットのインポート
 import 'hiraku/EventRegister.dart';
@@ -40,7 +44,6 @@ class UserState extends ChangeNotifier {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<UserState>(
@@ -52,6 +55,10 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.blue,
           ),
           home: LoginCheck(),
+          localizationsDelegates: [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+          ],
         ));
   }
 }
@@ -79,16 +86,27 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             ElevatedButton(
+              child: Text('次へ'),
               onPressed: () async {
                 await Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) {
-                    // 遷移先の画面としてリスト追加画面を指定
-                    return EventRegisterPage(UserID: user.uid);
+                    return EventListPage();
                   }),
                 );
               },
-              child: Text('イベント追加'),
-            )
+            ),
+            
+            ElevatedButton(
+                child: Text('イベント追加'),
+                onPressed: () async {
+                  await Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) {                    
+                      // 遷移先の画面としてリスト追加画面を指定
+                      return EventRegisterPage(UserID: user.uid);
+                  }),
+                );
+              },
+            )),
           ],
         ),
       ),
