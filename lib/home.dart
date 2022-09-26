@@ -11,8 +11,8 @@ class HomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
-              height: 100,
-              child:Text('イベント一覧',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 36)),
+              
+              child:Text('イベント一覧',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 26)),
               
             ),
             //イベントリスト
