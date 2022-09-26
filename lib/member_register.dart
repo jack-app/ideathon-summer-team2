@@ -89,7 +89,7 @@ class _MemberRegisterPageState extends State<MemberRegisterPage> {
   }
 
   // 日付のフォーマッター
-  DateFormat outputFormat = DateFormat('yyyy/MM/dd');
+  DateFormat outputFormat = DateFormat.yMMMd('ja');
 
   @override
   Widget build(BuildContext context) {
