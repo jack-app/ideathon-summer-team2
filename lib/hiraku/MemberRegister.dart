@@ -7,7 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:provider/provider.dart';
-
+import '../main.dart';
 import 'RandomString.dart';
 
 class FormLabelText extends Container {
@@ -28,16 +28,12 @@ class FormLabelText extends Container {
 // リスト一覧画面用Widget
 class MemberRegisterPage extends StatefulWidget {
   // 画面遷移元からのデータを受け取る変数
-  final String UserID;
   final String EventName;
   final DateTime EventDate;
 
   // コンストラクタ
   const MemberRegisterPage(
-      {Key? key,
-      required this.UserID,
-      required this.EventName,
-      required this.EventDate})
+      {Key? key, required this.EventName, required this.EventDate})
       : super(key: key);
 
   @override
@@ -46,7 +42,6 @@ class MemberRegisterPage extends StatefulWidget {
 
 class _MemberRegisterPageState extends State<MemberRegisterPage> {
   // 入力されたテキストをデータとして持つ
-  late String _UserID;
   late String _EventName;
   late DateTime _EventDate;
 
@@ -66,7 +61,6 @@ class _MemberRegisterPageState extends State<MemberRegisterPage> {
   void initState() {
     super.initState();
     // 受け取ったデータを状態を管理する変数に格納
-    _UserID = widget.UserID;
     _EventName = widget.EventName;
     _EventDate = widget.EventDate;
 
@@ -100,6 +94,8 @@ class _MemberRegisterPageState extends State<MemberRegisterPage> {
   @override
   Widget build(BuildContext context) {
     var _size = MediaQuery.of(context).size;
+    final UserState userState = Provider.of<UserState>(context);
+    final User user = userState.user!;
 
     return Scaffold(
         // AppBarを表示し、タイトルも設定
@@ -352,7 +348,7 @@ class _MemberRegisterPageState extends State<MemberRegisterPage> {
                       .collection('events') // コレクションID
                       .doc(EventDocID) // ドキュメントID
                       .set({
-                    'author': _UserID,
+                    'author': user.uid,
                     'name': _EventName,
                     'date': _EventDate,
                   }); // データ
