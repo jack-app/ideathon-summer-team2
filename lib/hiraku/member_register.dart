@@ -8,7 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:provider/provider.dart';
 import '../main.dart';
-import 'RandomString.dart';
+import 'random_string.dart';
 
 class FormLabelText extends Container {
   FormLabelText(String titleText)

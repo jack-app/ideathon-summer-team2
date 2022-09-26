@@ -8,8 +8,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:provider/provider.dart';
 
-import 'MemberRegister.dart';
-import 'RandomString.dart';
+import 'member_register.dart';
+import 'random_string.dart';
 
 class FormLabelText extends Container {
   FormLabelText(String titleText)
