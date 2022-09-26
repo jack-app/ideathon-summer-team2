@@ -36,8 +36,8 @@ class TitlePage extends StatelessWidget {
             Container(
               margin: EdgeInsets.all(40),
               child:SizedBox(
-                width: 200, //横幅
-                height: 50, //高さ
+                width: 200, 
+                height: 50, 
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(primary: Colors.blue,),
                   onPressed: () {
