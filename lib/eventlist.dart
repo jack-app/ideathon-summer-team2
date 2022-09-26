@@ -25,6 +25,12 @@ class EventListPage extends StatelessWidget {
         // データを元にListViewを作成
         body: Column(children: [
           Expanded(
+              child: Container(
+            margin: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+            decoration: BoxDecoration(
+              color: Color.fromARGB(255, 228, 228, 228),
+              borderRadius: BorderRadius.circular(10),
+            ),
             child: StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
                   .collection('events')
@@ -40,7 +46,7 @@ class EventListPage extends StatelessWidget {
                     children: documents.map((document) {
                       return Container(
                           margin:
-                              EdgeInsets.symmetric(horizontal: 24, vertical: 2),
+                              EdgeInsets.symmetric(horizontal: 0, vertical: 2),
                           child: Card(
                               elevation: 5,
                               shape: RoundedRectangleBorder(
@@ -71,7 +77,7 @@ class EventListPage extends StatelessWidget {
                 );
               },
             ),
-          ),
+          )),
           Container(
               margin: EdgeInsets.symmetric(horizontal: 0, vertical: 24),
               child: Column(children: [
