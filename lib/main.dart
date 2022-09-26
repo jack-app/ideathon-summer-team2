@@ -30,9 +30,9 @@ class TitlePage extends StatelessWidget {
               margin: EdgeInsets.symmetric(
                 vertical: 100.0,
                 horizontal: 20.0,),
-              child:Text('マネコレ',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 36)),),
+              child:Text('マネコレへようこそ！',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 36)),),
             
-            //アカウント作成ボタン
+            //新規登録ボタン
             Container(
               margin: EdgeInsets.all(40),
               child:SizedBox(
@@ -43,10 +43,10 @@ class TitlePage extends StatelessWidget {
                   onPressed: () {
                     Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) {
-                  // 遷移先の画面としてアカウント作成画面を指定
+                  // 遷移先の画面として新規登録画面を指定
                     return CreateAcount();}),
                   );},
-                  child: Text('アカウント作成', style: TextStyle(color: Colors.white)),
+                  child: Text('新規登録', style: TextStyle(color: Colors.white)),
                 ),
               ),
             ),
