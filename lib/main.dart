@@ -28,7 +28,7 @@ class TitlePage extends StatelessWidget {
             //タイトル
             Container(
               margin: EdgeInsets.symmetric(
-                vertical: 200.0,
+                vertical: 100.0,
                 horizontal: 20.0,),
               child:Text('マネコレ',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 36)),),
             
