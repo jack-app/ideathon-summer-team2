@@ -8,7 +8,7 @@ import 'package:intl/intl.dart';
 import 'main.dart';
 import 'eventdetail.dart';
 // 作成したウィジェットのインポート
-import 'hiraku/EventRegister.dart';
+import 'event_register.dart';
 
 // リスト一覧画面用Widget
 class EventListPage extends StatelessWidget {
