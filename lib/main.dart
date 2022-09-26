@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'eventdetail.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'login.dart';
 import 'config/config.dart';
+import 'eventlist.dart';
 
 final configurations = Configurations();
 
@@ -36,7 +37,6 @@ class UserState extends ChangeNotifier {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<UserState>(
@@ -48,6 +48,10 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.blue,
           ),
           home: LoginCheck(),
+          localizationsDelegates: [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+          ],
         ));
   }
 }
@@ -74,16 +78,16 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            /*ElevatedButton(
+            ElevatedButton(
               child: Text('次へ'),
               onPressed: () async {
                 await Navigator.of(context).pushReplacement(
                   MaterialPageRoute(builder: (context) {
-                    return EventDetail(eventid: 'oJHwQOxOBiSPiMlrdcpP');
+                    return EventListPage();
                   }),
                 );
               },
-            ),*/
+            ),
           ],
         ),
       ),
