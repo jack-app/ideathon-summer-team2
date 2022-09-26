@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -95,18 +94,17 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
             ),
-            
             ElevatedButton(
-                child: Text('イベント追加'),
-                onPressed: () async {
-                  await Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) {                    
-                      // 遷移先の画面としてリスト追加画面を指定
-                      return EventRegisterPage(UserID: user.uid);
+              child: Text('イベント追加'),
+              onPressed: () async {
+                await Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) {
+                    // 遷移先の画面としてリスト追加画面を指定
+                    return EventRegisterPage(UserID: user.uid);
                   }),
                 );
               },
-            )),
+            ),
           ],
         ),
       ),
