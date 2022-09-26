@@ -71,7 +71,7 @@ class EventListPage extends StatelessWidget {
               await Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) {
                   // 遷移先の画面としてリスト追加画面を指定
-                  return EventRegisterPage(UserID: user.uid);
+                  return EventRegisterPage();
                 }),
               );
             },
