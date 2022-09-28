@@ -91,6 +91,7 @@ class Participants extends StatelessWidget {
             .collection('events')
             .doc(event_id)
             .collection('participants')
+            .orderBy('deadline')
             .snapshots(),
         builder: (context, snapshot) {
           // データが取得できた場合
@@ -102,6 +103,16 @@ class Participants extends StatelessWidget {
                   child: ListView.builder(
                 itemCount: documents.length,
                 itemBuilder: (context, index) {
+                  final dt = DateTime.now();
+                  final deadline = documents[index]['deadline'].toDate();
+                  final datecolor;
+                  if (deadline.isBefore(dt.subtract(Duration(days: 1)))) {
+                    datecolor = Colors.red;
+                  } else if (deadline.isBefore(dt.add(Duration(days: 3)))) {
+                    datecolor = Color.fromARGB(255, 242, 218, 0);
+                  } else {
+                    datecolor = Colors.green;
+                  }
                   return Column(children: <Widget>[
                     Padding(
                         padding: EdgeInsets.only(top: 16, right: 16, left: 16),
@@ -125,8 +136,21 @@ class Participants extends StatelessWidget {
                               child: ListTile(
                                 leading: Icon(Icons.account_circle),
                                 title: Text(documents[index]['name']),
-                                subtitle: Text(
-                                    '金額：${documents[index]['money'].toString()}円\n期限：${outputFormat.format(documents[index]['deadline'].toDate())}'),
+                                subtitle: RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      TextSpan(
+                                          text:
+                                              '金額：${documents[index]['money'].toString()}円\n',
+                                          style: TextStyle(color: Colors.grey)),
+                                      TextSpan(
+                                          text:
+                                              '期限：${outputFormat.format(documents[index]['deadline'].toDate())}',
+                                          style: TextStyle(color: datecolor)),
+                                    ],
+                                  ),
+                                ),
+
                                 //右側にボタンを配置
                                 trailing: Row(
                                   // これを書かないとレイアウトが崩れる
