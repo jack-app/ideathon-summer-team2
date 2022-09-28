@@ -36,7 +36,7 @@ class _CreateAcountState extends State<CreateAcount> {
             //タイトル
               Container(
                 margin: EdgeInsets.symmetric(
-                  vertical: 100.0,),
+                  vertical: 60.0,),
                 child:Text('アカウントを作ろう！',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 26)),),
 
               //登録フォーム
