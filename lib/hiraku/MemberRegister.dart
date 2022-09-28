@@ -351,6 +351,7 @@ class _MemberRegisterPageState extends State<MemberRegisterPage> {
                     'author': user.uid,
                     'name': _EventName,
                     'date': _EventDate,
+                    'participants_num': MemberList.length,
                   }); // データ
 
                   for (var index = 0; index < MemberList.length; index++) {

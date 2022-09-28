@@ -35,7 +35,7 @@ class EventListPage extends StatelessWidget {
               stream: FirebaseFirestore.instance
                   .collection('events')
                   .where('author', isEqualTo: user.uid)
-                  .orderBy('date', descending: true)
+                  .orderBy('date')
                   .snapshots(),
               builder: (context, snapshot) {
                 // データが取得できた場合
@@ -64,8 +64,18 @@ class EventListPage extends StatelessWidget {
                                 },
                                 child: ListTile(
                                   title: Text(document['name']),
-                                  subtitle: Text(DateFormat.yMMMd('ja')
-                                      .format(document['date'].toDate())),
+                                  subtitle: Text(
+                                      '${DateFormat.yMMMd('ja').format(document['date'].toDate()).padRight(13, "  ")} 参加者 ${document['participants_num'].toString()}名'),
+                                  trailing: IconButton(
+                                    icon: Icon(Icons.delete),
+                                    onPressed: () async {
+                                      // 投稿メッセージのドキュメントを削除
+                                      await FirebaseFirestore.instance
+                                          .collection('events')
+                                          .doc(document.id)
+                                          .delete();
+                                    },
+                                  ),
                                 ),
                               )));
                     }).toList(),
