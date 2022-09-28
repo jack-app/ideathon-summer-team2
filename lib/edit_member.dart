@@ -103,11 +103,18 @@ class _EditMemberPageState extends State<EditMemberPage> {
         title: Text('メンバー編集'),
       ),
       // ListViewを使いリスト一覧を表示
-      body: SingleChildScrollView(
-          child: Column(children: [
+      body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         Padding(
-            padding: EdgeInsets.only(top: 32.0, left: 16.0, right: 16.0),
+            padding: EdgeInsets.only(left: 16.0, right: 16.0),
             child: Column(children: [
+              Padding(
+                  padding: EdgeInsets.only(bottom: 16),
+                  child: Text(
+                    'メンバーの情報を更新しよう',
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  )),
               Card(
                   color: Colors.white,
                   shape: RoundedRectangleBorder(
@@ -228,7 +235,7 @@ class _EditMemberPageState extends State<EditMemberPage> {
                       ))),
               const SizedBox(height: 15),
             ]))
-      ])),
+      ]),
     );
   }
 }

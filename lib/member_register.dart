@@ -116,7 +116,7 @@ class _MemberRegisterPageState extends State<MemberRegisterPage> {
 
             // メンバーのフォーム
             Padding(
-                padding: EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
+                padding: EdgeInsets.only(left: 16.0, right: 16.0),
                 child: Card(
                     color: Colors.white,
                     shape: RoundedRectangleBorder(
