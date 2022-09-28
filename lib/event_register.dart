@@ -1,5 +1,5 @@
 import 'dart:html';
-import '../main.dart';
+import 'main.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -8,8 +8,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:provider/provider.dart';
 
-import 'MemberRegister.dart';
-import 'RandomString.dart';
+import 'member_register.dart';
+import 'random_string.dart';
 
 class FormLabelText extends Container {
   FormLabelText(String titleText)

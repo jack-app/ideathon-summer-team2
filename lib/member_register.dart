@@ -7,8 +7,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:provider/provider.dart';
-import '../main.dart';
-import 'RandomString.dart';
+import 'main.dart';
+import 'random_string.dart';
 
 class FormLabelText extends Container {
   FormLabelText(String titleText)
@@ -89,7 +89,7 @@ class _MemberRegisterPageState extends State<MemberRegisterPage> {
   }
 
   // 日付のフォーマッター
-  DateFormat outputFormat = DateFormat('yyyy/MM/dd');
+  DateFormat outputFormat = DateFormat.yMMMd('ja');
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +116,7 @@ class _MemberRegisterPageState extends State<MemberRegisterPage> {
 
             // メンバーのフォーム
             Padding(
-                padding: EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
+                padding: EdgeInsets.only(left: 16.0, right: 16.0),
                 child: Card(
                     color: Colors.white,
                     shape: RoundedRectangleBorder(

@@ -8,7 +8,7 @@ import 'package:intl/intl.dart';
 import 'main.dart';
 import 'eventdetail.dart';
 // 作成したウィジェットのインポート
-import 'hiraku/EventRegister.dart';
+import 'event_register.dart';
 
 // リスト一覧画面用Widget
 class EventListPage extends StatelessWidget {
@@ -59,7 +59,10 @@ class EventListPage extends StatelessWidget {
                                   await Navigator.of(context).push(
                                       MaterialPageRoute(builder: (context) {
                                     // 遷移先の画面としてリスト追加画面を指定
-                                    return EventDetail(eventid: document.id);
+                                    return EventDetail(
+                                      event_id: document.id,
+                                      event_date: document['date'].toDate(),
+                                    );
                                   }));
                                 },
                                 child: ListTile(
