@@ -44,6 +44,16 @@ class EventListPage extends StatelessWidget {
                   // 取得した投稿メッセージ一覧を元にリスト表示
                   return ListView(
                     children: documents.map((document) {
+                      final dt = DateTime.now();
+                      final date = document['date'].toDate();
+                      final datecolor;
+                      if (date.isBefore(dt.subtract(Duration(days: 1)))) {
+                        datecolor = Colors.red;
+                      } else if (date.isBefore(dt.add(Duration(days: 3)))) {
+                        datecolor = Color.fromARGB(255, 242, 218, 0);
+                      } else {
+                        datecolor = Colors.grey;
+                      }
                       return Container(
                           margin:
                               EdgeInsets.symmetric(horizontal: 0, vertical: 2),
@@ -67,8 +77,20 @@ class EventListPage extends StatelessWidget {
                                 },
                                 child: ListTile(
                                   title: Text(document['name']),
-                                  subtitle: Text(
-                                      '${DateFormat.yMMMd('ja').format(document['date'].toDate()).padRight(13, "  ")} 参加者 ${document['participants_num'].toString()}名'),
+                                  subtitle: RichText(
+                                    text: TextSpan(
+                                      children: [
+                                        TextSpan(
+                                            text:
+                                                '${DateFormat.yMMMd('ja').format(document['date'].toDate()).padRight(13, "  ")} ',
+                                            style: TextStyle(color: datecolor)),
+                                        TextSpan(
+                                            text:
+                                                '参加者 ${document['participants_num'].toString()}名',
+                                            style: TextStyle(color: datecolor)),
+                                      ],
+                                    ),
+                                  ),
                                   trailing: IconButton(
                                     icon: Icon(Icons.delete),
                                     onPressed: () async {
