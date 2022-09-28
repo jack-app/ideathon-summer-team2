@@ -126,7 +126,7 @@ class Participants extends StatelessWidget {
                                 leading: Icon(Icons.account_circle),
                                 title: Text(documents[index]['name']),
                                 subtitle: Text(
-                                    '金額：${documents[index]['money'].toString()}円   期限：${outputFormat.format(documents[index]['deadline'].toDate())}'),
+                                    '金額：${documents[index]['money'].toString()}円\n期限：${outputFormat.format(documents[index]['deadline'].toDate())}'),
                                 //右側にボタンを配置
                                 trailing: Row(
                                   // これを書かないとレイアウトが崩れる
