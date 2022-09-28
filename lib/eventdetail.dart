@@ -40,6 +40,7 @@ class EventDetail extends StatelessWidget {
                     // 取得した投稿メッセージ一覧を元にリスト表示
                     return Expanded(
                         child: Column(children: [
+                      SizedBox(height: 16),
                       Text(
                         documents.get('name'),
                         style: TextStyle(fontSize: 30),
