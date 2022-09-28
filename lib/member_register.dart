@@ -261,6 +261,7 @@ class _MemberRegisterPageState extends State<MemberRegisterPage> {
             ),
           ),
         ),
+        // 確定したメンバーを並べて表示
         Container(
             child: Expanded(
           child: ListView.builder(
