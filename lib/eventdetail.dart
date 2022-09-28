@@ -142,7 +142,8 @@ class Participants extends StatelessWidget {
                                       TextSpan(
                                           text:
                                               '金額：${documents[index]['money'].toString()}円\n',
-                                          style: TextStyle(color: Colors.grey)),
+                                          style:
+                                              TextStyle(color: Colors.black)),
                                       TextSpan(
                                           text:
                                               '期限：${outputFormat.format(documents[index]['deadline'].toDate())}',
