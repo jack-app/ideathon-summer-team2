@@ -11,6 +11,7 @@ import 'eventdetail.dart';
 
 // 作成したウィジェットのインポート
 import 'event_register.dart';
+import 'start.dart';
 
 const kButtonColorPrimary = Color(0xFFECEFF1);
 const kButtonTextColorPrimary = Color(0xFF455A64);
@@ -60,6 +61,7 @@ class _CustomTextField extends StatelessWidget {
     );
   }
 }
+
 
 final configurations = Configurations();
 
@@ -151,6 +153,18 @@ class LoginPage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class StartPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'マネコレ',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,),
+      home: TitlePage(),
     );
   }
 }
