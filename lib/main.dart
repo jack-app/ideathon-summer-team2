@@ -30,13 +30,23 @@ class TitlePage extends StatelessWidget {
               margin: EdgeInsets.symmetric(
                 vertical: 100.0,
                 horizontal: 20.0,),
-              child:Text('マネコレへようこそ！',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 36)),),
-            
+              child:Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.all(15),
+                    child:Text('マネコレへようこそ！',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30)),
+                  ),
+                  Text('マネコレで集金管理を簡単に',style: TextStyle(fontSize: 20)),
+                ]
+              ),
+            ),
+        
             //新規登録ボタン
             Container(
-              margin: EdgeInsets.all(40),
+              margin: EdgeInsets.all(20),
               child:SizedBox(
-                width: 200, 
+                width: 300, 
                 height: 50, 
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(primary: Colors.blue,),
@@ -53,9 +63,9 @@ class TitlePage extends StatelessWidget {
           
             //ログイン画面ボタン
             Container(
-              margin: EdgeInsets.all(40),
+              margin: EdgeInsets.all(20),
               child:SizedBox(
-                width: 200, 
+                width: 300, 
                 height: 50, 
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(primary: Colors.blue,),
@@ -64,9 +74,10 @@ class TitlePage extends StatelessWidget {
                 ),
               ),
             ),
+
           ]
         ),
-      ),
+      ),  
     ); 
   }
 }
