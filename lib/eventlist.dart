@@ -52,7 +52,7 @@ class EventListPage extends StatelessWidget {
                       } else if (date.isBefore(dt.add(Duration(days: 3)))) {
                         datecolor = Color.fromARGB(255, 242, 218, 0);
                       } else {
-                        datecolor = Colors.grey;
+                        datecolor = Colors.black;
                       }
                       return Container(
                           margin:
