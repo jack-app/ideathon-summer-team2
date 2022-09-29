@@ -91,7 +91,8 @@ class _EventRegisterPageState extends State<EventRegisterPage> {
                   ),
                   elevation: 10.0,
                   child: Padding(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.only(
+                          top: 32.0, left: 16.0, bottom: 16.0, right: 16.0),
                       child: Column(
                         children: <Widget>[
                           // イベント名の入力フィールド
@@ -99,33 +100,71 @@ class _EventRegisterPageState extends State<EventRegisterPage> {
                             // 自動フォーカス
                             autofocus: true,
                             // テキスト入力のラベルを設定
-                            decoration: InputDecoration(labelText: "イベント名"),
+                            decoration: InputDecoration(
+                              labelText: 'イベント名',
+                              icon: Icon(
+                                Icons.emoji_events,
+                              ),
+                              hintText: 'イベント名を入力してください',
+                              hintStyle: TextStyle(
+                                  color: kTextColorSecondary, fontSize: 10),
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(
+                                  color: kAccentColor,
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(
+                                  color: kTextColorSecondary,
+                                ),
+                              ),
+                            ),
                             onChanged: (String value) {
                               setState(() {
                                 EventName = value;
                               });
                             },
                           ),
-                          const SizedBox(height: 10),
-                          FormLabelText('イベントの日程'),
-                          Row(
-                            children: <Widget>[
-                              Text(outputFormat.format(EventDate)),
-                              IconButton(
-                                  onPressed: () {
-                                    _EventDatePicker(context);
-                                  },
-                                  icon: Icon(
-                                    Icons.edit_calendar,
-                                  )),
-                            ],
-                          ),
-                          Container(
-                            height: 1.0,
-                            color: Colors.grey,
-                          ),
+                          const SizedBox(height: 20),
 
-                          const SizedBox(height: 30),
+                          // 日付の入力ボックス
+                          Container(
+                            child: InputDecorator(
+                              decoration: InputDecoration(
+                                icon: Icon(Icons.edit_calendar),
+                                border: InputBorder.none,
+                              ),
+                              child: InkWell(
+                                borderRadius: BorderRadius.circular(8),
+                                child: Container(
+                                  child: InputDecorator(
+                                    decoration: InputDecoration(
+                                      labelText: 'イベントの日程',
+                                      floatingLabelBehavior:
+                                          FloatingLabelBehavior.always,
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                        borderSide: BorderSide(
+                                          color: kTextColorSecondary,
+                                        ),
+                                      ),
+                                    ),
+                                    child: Text(outputFormat.format(EventDate),
+                                        textAlign: TextAlign.left),
+                                  ),
+                                ),
+                                onTap: () {
+                                  _EventDatePicker(context);
+                                },
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+
                           // イベント登録ボタン
                           ElevatedButton.icon(
                               icon: const Icon(
@@ -159,15 +198,17 @@ class _EventRegisterPageState extends State<EventRegisterPage> {
                               }),
 
                           // 注意書きのテキスト
-                          Text(
-                            FormExceptionText,
-                            style: TextStyle(
-                              color: Colors.red,
+                          Padding(
+                            padding: EdgeInsets.all(16.0),
+                            child: Text(
+                              FormExceptionText,
+                              style: TextStyle(
+                                color: Colors.red,
+                              ),
                             ),
                           ),
                         ],
                       ))),
-              const SizedBox(height: 15),
             ]))
       ])),
     );

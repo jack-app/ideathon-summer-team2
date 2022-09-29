@@ -134,14 +134,35 @@ class _MemberRegisterPageState extends State<MemberRegisterPage> {
                           // 自動フォーカス
                           autofocus: true,
                           // テキスト入力のラベルを設定
-                          decoration: InputDecoration(labelText: "名前"),
+                          decoration: InputDecoration(
+                            labelText: '名前',
+                            icon: Icon(
+                              Icons.badge,
+                            ),
+                            hintText: 'メンバーの名前を入力してください',
+                            hintStyle: TextStyle(
+                                color: kTextColorSecondary, fontSize: 10),
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: BorderSide(
+                                color: kAccentColor,
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: BorderSide(
+                                color: kTextColorSecondary,
+                              ),
+                            ),
+                          ),
                           onChanged: (String value) {
                             setState(() {
                               NewMemberName = value;
                             });
                           },
                         ),
-                        const SizedBox(height: 8),
+                        const SizedBox(height: 10),
 
                         // 金額のフォーム
                         TextFormField(
@@ -152,32 +173,68 @@ class _MemberRegisterPageState extends State<MemberRegisterPage> {
                           // 自動フォーカス
                           autofocus: true,
                           // テキスト入力のラベルを設定
-                          decoration: InputDecoration(labelText: "金額"),
+                          decoration: InputDecoration(
+                            labelText: '金額',
+                            icon: Icon(
+                              Icons.money,
+                            ),
+                            hintText: '金額を数字で入力してください',
+                            hintStyle: TextStyle(
+                                color: kTextColorSecondary, fontSize: 10),
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: BorderSide(
+                                color: kAccentColor,
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: BorderSide(
+                                color: kTextColorSecondary,
+                              ),
+                            ),
+                          ),
                           onChanged: (String value) {
                             setState(() {
                               NewMemberPaymentStr = value;
                             });
                           },
                         ),
-                        const SizedBox(height: 8),
+                        const SizedBox(height: 10),
 
-                        // 支払期限のフォーム
-                        FormLabelText('支払期限'),
-                        Row(
-                          children: <Widget>[
-                            Text(outputFormat.format(NewMemberDeadline)),
-                            IconButton(
-                                onPressed: () {
-                                  _DeadlinePicker(context);
-                                },
-                                icon: Icon(
-                                  Icons.edit_calendar,
-                                )),
-                          ],
-                        ),
+                        // 日付の入力ボックス
                         Container(
-                          height: 1.0,
-                          color: Colors.grey[800],
+                          child: InputDecorator(
+                            decoration: InputDecoration(
+                              icon: Icon(Icons.edit_calendar),
+                              border: InputBorder.none,
+                            ),
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Container(
+                                child: InputDecorator(
+                                  decoration: InputDecoration(
+                                    labelText: '支払期限',
+                                    floatingLabelBehavior:
+                                        FloatingLabelBehavior.always,
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                      borderSide: BorderSide(
+                                        color: kTextColorSecondary,
+                                      ),
+                                    ),
+                                  ),
+                                  child: Text(
+                                      outputFormat.format(NewMemberDeadline),
+                                      textAlign: TextAlign.left),
+                                ),
+                              ),
+                              onTap: () {
+                                _DeadlinePicker(context);
+                              },
+                            ),
+                          ),
                         ),
 
                         const SizedBox(height: 16),
@@ -239,10 +296,13 @@ class _MemberRegisterPageState extends State<MemberRegisterPage> {
                           },
                         ),
                         // 注意書きのテキスト
-                        Text(
-                          FormExceptionText,
-                          style: TextStyle(
-                            color: Colors.red,
+                        Padding(
+                          padding: EdgeInsets.all(10.0),
+                          child: Text(
+                            FormExceptionText,
+                            style: TextStyle(
+                              color: Colors.red,
+                            ),
                           ),
                         ),
                       ],
