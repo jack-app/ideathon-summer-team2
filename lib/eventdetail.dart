@@ -125,7 +125,7 @@ class Participants extends StatelessWidget {
                                   MaterialPageRoute(builder: (context) {
                                     // 遷移先の画面としてリスト追加画面を指定
                                     return EditMemberPage(
-                                        eventid: event_id,
+                                        event_id: event_id,
                                         memberid: documents[index].id,
                                         name: documents[index]['name'],
                                         payment: documents[index]['money'],

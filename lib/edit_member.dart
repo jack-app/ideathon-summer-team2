@@ -29,7 +29,7 @@ class FormLabelText extends Container {
 // リスト一覧画面用Widget
 class EditMemberPage extends StatefulWidget {
   // 画面遷移元からのデータを受け取る変数
-  final eventid;
+  final event_id;
   final memberid;
   final name;
   final payment;
@@ -38,7 +38,7 @@ class EditMemberPage extends StatefulWidget {
   // コンストラクタ
   const EditMemberPage(
       {Key? key,
-      required this.eventid,
+      required this.event_id,
       required this.memberid,
       required this.name,
       required this.payment,
@@ -51,7 +51,7 @@ class EditMemberPage extends StatefulWidget {
 class _EditMemberPageState extends State<EditMemberPage> {
   // State
   // イベントのID
-  String eventid = "";
+  String event_id = "";
   // メンバーのID
   String memberid = "";
   // 新しい名前
@@ -67,7 +67,7 @@ class _EditMemberPageState extends State<EditMemberPage> {
   void initState() {
     super.initState();
     // 受け取ったデータを状態を管理する変数に格納
-    eventid = widget.eventid;
+    event_id = widget.event_id;
     memberid = widget.memberid;
     newname = widget.name;
     newpayment = widget.payment.toString();
@@ -251,7 +251,7 @@ class _EditMemberPageState extends State<EditMemberPage> {
                                   try {
                                     await FirebaseFirestore.instance
                                         .collection('events')
-                                        .doc(eventid)
+                                        .doc(event_id)
                                         .collection('participants')
                                         .doc(memberid)
                                         .update({

@@ -11,21 +11,6 @@ import 'package:provider/provider.dart';
 import 'member_register.dart';
 import 'random_string.dart';
 
-class FormLabelText extends Container {
-  FormLabelText(String titleText)
-      : super(
-          width: double.infinity,
-          child: Text(
-            titleText,
-            textAlign: TextAlign.left,
-            style: TextStyle(
-              color: Colors.grey,
-              fontSize: 12.0,
-            ),
-          ),
-        );
-}
-
 // リスト一覧画面用Widget
 class EventRegisterPage extends StatefulWidget {
   @override
