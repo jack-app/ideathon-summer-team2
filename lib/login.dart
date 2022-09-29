@@ -4,6 +4,53 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'main.dart';
 import 'eventlist.dart';
+import 'start.dart';
+
+const kButtonColorPrimary = Color(0xFFECEFF1);
+const kButtonTextColorPrimary = Color(0xFF455A64);
+const Color kAccentColor = Color(0xFFFE7C64);
+const Color kBackgroundColor = Color(0xFF19283D);
+const Color kTextColorPrimary = Color(0xFFECEFF1);
+const Color kTextColorSecondary = Color(0xFFB0BEC5);
+const Color kIconColor = Color(0xFF455A64);
+
+class _CustomTextField extends StatelessWidget {
+  final String labelText;
+  final String hintText;
+  final bool obscureText;
+
+  const _CustomTextField({
+    Key? key,
+    required this.labelText,
+    required this.hintText,
+    required this.obscureText,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      decoration: InputDecoration(
+        labelText: labelText,
+        hintText: hintText,
+        hintStyle: TextStyle(color: kTextColorSecondary),
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(
+            color: kAccentColor,
+          ),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(
+            color: kTextColorSecondary,
+          ),
+        ),
+      ),
+      obscureText: obscureText,
+    );
+  }
+}
 
 class LoginCheck extends StatefulWidget {
   LoginCheck({Key? key}) : super(key: key);
@@ -20,7 +67,7 @@ class _LoginCheckState extends State<LoginCheck> {
     if (currentUser == null) {
       await Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) {
-          return LoginPage();
+          return TitlePage();
         }),
       );
     } else {
@@ -73,127 +120,124 @@ class _LoginPageState extends State<LoginPage> {
 
     return Scaffold(
       body: Center(
-        child: Container(
-          padding: EdgeInsets.all(24),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              // 名前入力
-              TextFormField(
-                decoration: InputDecoration(labelText: '名前※ユーザー登録時のみ'),
-                onChanged: (String value) {
-                  setState(() {
-                    name = value;
-                  });
-                },
-              ),
-              // メールアドレス入力
-              TextFormField(
-                decoration: InputDecoration(labelText: 'メールアドレス'),
-                onChanged: (String value) {
-                  setState(() {
-                    email = value;
-                  });
-                },
-              ),
-              // パスワード入力
-              TextFormField(
-                decoration: InputDecoration(labelText: 'パスワード'),
-                obscureText: true,
-                onChanged: (String value) {
-                  setState(() {
-                    password = value;
-                  });
-                },
-              ),
-              Container(
-                padding: EdgeInsets.all(8),
-                // メッセージ表示
-                child: Text(infoText),
-              ),
-              Container(
-                width: double.infinity,
-                // ユーザー登録ボタン
-                child: ElevatedButton(
-                  child: Text('ユーザー登録'),
-                  onPressed: () async {
-                    if (name == "") {
-                      setState(() {
-                        infoText = "名前を入力してください";
-                      });
-                    } else {
-                      try {
-                        // メール/パスワードでユーザー登録
-                        final FirebaseAuth auth = FirebaseAuth.instance;
-                        final result =
-                            await auth.createUserWithEmailAndPassword(
-                          email: email,
-                          password: password,
-                        );
-                        // ユーザー情報を更新
-                        userState.setUser(result.user!);
-                        User? user = FirebaseAuth.instance.currentUser;
-                        Map<String, dynamic> insertObj = {
-                          'id': user!.uid,
-                          'name': name,
-                        };
-                        var doc = await FirebaseFirestore.instance
-                            .collection('users')
-                            .doc(user.uid);
-                        await doc.set(insertObj);
-                        // ユーザー登録に成功した場合
-                        // チャット画面に遷移＋ログイン画面を破棄
-                        await Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (context) {
-                            return EventListPage();
-                          }),
-                        );
-                      } catch (e) {
-                        // ユーザー登録に失敗した場合
-                        setState(() {
-                          infoText = "登録に失敗しました：${e.toString()}";
-                        });
-                      }
-                    }
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            const SizedBox(height: 16),
+            Container(
+              //タイトル
+              child: Text('ログイン'),
+            ),
+            const SizedBox(height: 8),
+            Container(
+                //メールアドレス入力
+                width: 500,
+                child: TextField(
+                  decoration: InputDecoration(
+                    labelText: 'mail',
+                    hintText: 'メールアドレスを入力してください',
+                    hintStyle: TextStyle(color: kTextColorSecondary),
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide(
+                        color: kAccentColor,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide(
+                        color: kTextColorSecondary,
+                      ),
+                    ),
+                  ),
+                  obscureText: false,
+                  onChanged: (String value) {
+                    setState(() {
+                      email = value;
+                    });
                   },
+                )),
+            const SizedBox(height: 16),
+            Container(
+                //メールアドレス入力
+                width: 500,
+                child: TextField(
+                  decoration: InputDecoration(
+                    labelText: 'password',
+                    hintText: 'パスワードを入力してください',
+                    hintStyle: TextStyle(color: kTextColorSecondary),
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide(
+                        color: kAccentColor,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide(
+                        color: kTextColorSecondary,
+                      ),
+                    ),
+                  ),
+                  obscureText: false,
+                  onChanged: (String value) {
+                    setState(() {
+                      password = value;
+                    });
+                  },
+                )),
+            const SizedBox(height: 12),
+            Text(infoText),
+            const SizedBox(height: 12),
+            Container(
+              width: 100,
+              child: TextButton(
+                style: TextButton.styleFrom(
+                  primary: kButtonTextColorPrimary,
+                  backgroundColor: kButtonColorPrimary,
+                  padding: EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                onPressed: () async {
+                  try {
+                    // メール/パスワードでログイン
+                    final FirebaseAuth auth = FirebaseAuth.instance;
+                    final result = await auth.signInWithEmailAndPassword(
+                      email: email,
+                      password: password,
+                    );
+                    // ユーザー情報を更新
+                    userState.setUser(result.user!);
+                    // ログインに成功した場合
+                    // チャット画面に遷移＋ログイン画面を破棄
+                    await Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) {
+                        return EventListPage();
+                      }),
+                    );
+                  } catch (e) {
+                    // ログインに失敗した場合
+                    setState(() {
+                      infoText = "ログインに失敗しました：${e.toString()}";
+                    });
+                  }
+                },
+                child: Text(
+                  'ログイン',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText2!
+                      .copyWith(color: kButtonTextColorPrimary, fontSize: 18),
                 ),
               ),
-              const SizedBox(height: 8),
-              Container(
-                width: double.infinity,
-                // ログイン登録ボタン
-                child: OutlinedButton(
-                  child: Text('ログイン'),
-                  onPressed: () async {
-                    try {
-                      // メール/パスワードでログイン
-                      final FirebaseAuth auth = FirebaseAuth.instance;
-                      final result = await auth.signInWithEmailAndPassword(
-                        email: email,
-                        password: password,
-                      );
-                      // ユーザー情報を更新
-                      userState.setUser(result.user!);
-                      // ログインに成功した場合
-                      // チャット画面に遷移＋ログイン画面を破棄
-                      await Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (context) {
-                          return EventListPage();
-                        }),
-                      );
-                    } catch (e) {
-                      // ログインに失敗した場合
-                      setState(() {
-                        infoText = "ログインに失敗しました：${e.toString()}";
-                      });
-                    }
-                  },
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
-
+}
