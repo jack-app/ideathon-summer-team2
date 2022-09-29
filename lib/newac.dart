@@ -37,7 +37,7 @@ class _CreateAcountState extends State<CreateAcount> {
           icon: Icon(Icons.arrow_back),
           color: Colors.white,
         ),
-        title: Text('新規登録', style: TextStyle(color: Colors.white)),
+        title: Text('ログイン', style: TextStyle(color: Colors.white)),
       ),
       body: Center(
         child: Container(

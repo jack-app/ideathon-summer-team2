@@ -6,6 +6,8 @@ import 'main.dart';
 import 'eventlist.dart';
 import 'start.dart';
 
+bool _isObscure = true;
+
 const kButtonColorPrimary = Color(0xFFECEFF1);
 const kButtonTextColorPrimary = Color(0xFF455A64);
 const Color kAccentColor = Color(0xFFFE7C64);
@@ -119,11 +121,117 @@ class _LoginPageState extends State<LoginPage> {
     final UserState userState = Provider.of<UserState>(context);
 
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) {
+                // 遷移先の画面としてホーム画面を指定
+                return TitlePage();
+              }),
+            );
+          },
+          icon: Icon(Icons.arrow_back),
+          color: Colors.white,
+        ),
+        title: Text('ログイン', style: TextStyle(color: Colors.white)),
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
+          //ここから
+
           children: <Widget>[
             const SizedBox(height: 16),
+            Card(
+              color: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0),
+              ),
+              elevation: 10.0,
+              child: Container(
+                width: 1200,
+                padding: const EdgeInsets.all(16.0),
+                child: Column(children: <Widget>[
+                  const SizedBox(height: 32),
+                  TextField(
+                    decoration: InputDecoration(
+                      labelText: 'mail',
+                      icon: Icon(Icons.email),
+                      hintText: 'メールアドレスを入力してください',
+                      hintStyle: TextStyle(color: kTextColorSecondary),
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: BorderSide(
+                          color: kAccentColor,
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: BorderSide(
+                          color: kTextColorSecondary,
+                        ),
+                      ),
+                    ),
+                    obscureText: false,
+                    onChanged: (String value) {
+                      setState(() {
+                        email = value;
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 64),
+                  TextFormField(
+                    obscureText: _isObscure,
+                    decoration: InputDecoration(
+                      labelText: 'password',
+                      hintText: 'パスワードを入力してください',
+                      hintStyle: TextStyle(color: kTextColorSecondary),
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                      icon: Icon(Icons.vpn_key),
+                      suffixIcon: IconButton(
+                        icon: Icon(Icons.visibility_off),
+                        onPressed: () {
+                          setState(() {
+                            _isObscure = !_isObscure;
+                          });
+                        },
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: BorderSide(
+                          color: kAccentColor,
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: BorderSide(
+                          color: kTextColorSecondary,
+                        ),
+                        /*suffixIcon: IconButton(
+                                icon: Icon(_isObscure
+                                ? Icons.visibility_off
+                                : Icons.visibility),
+                            onPressed: () {
+                              setState(() {
+                                _isObscure = !_isObscure;
+                              });
+                            },
+                          ),*/  
+                      ),
+                    ),
+                    onChanged: (String value) {
+                      setState(() {
+                        password = value;
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 32),
+                ]),
+              ),
+            ),
+            /*
             Container(
               //タイトル
               child: Text('ログイン'),
@@ -191,47 +299,48 @@ class _LoginPageState extends State<LoginPage> {
             const SizedBox(height: 12),
             Text(infoText),
             const SizedBox(height: 12),
+            */
+            //ここまで
             Container(
-              width: 100,
-              child: TextButton(
-                style: TextButton.styleFrom(
-                  primary: kButtonTextColorPrimary,
-                  backgroundColor: kButtonColorPrimary,
-                  padding: EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+              //ログインボタン
+              margin: EdgeInsets.all(30),
+              child: SizedBox(
+                width: 200,
+                height: 50,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.blue,
                   ),
-                ),
-                onPressed: () async {
-                  try {
-                    // メール/パスワードでログイン
-                    final FirebaseAuth auth = FirebaseAuth.instance;
-                    final result = await auth.signInWithEmailAndPassword(
-                      email: email,
-                      password: password,
-                    );
-                    // ユーザー情報を更新
-                    userState.setUser(result.user!);
-                    // ログインに成功した場合
-                    // チャット画面に遷移＋ログイン画面を破棄
-                    await Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) {
-                        return EventListPage();
-                      }),
-                    );
-                  } catch (e) {
-                    // ログインに失敗した場合
-                    setState(() {
-                      infoText = "ログインに失敗しました：${e.toString()}";
-                    });
-                  }
-                },
-                child: Text(
-                  'ログイン',
-                  style: Theme.of(context)
+                  onPressed: () async {
+                    try {
+                      // メール/パスワードでログイン
+                      final FirebaseAuth auth = FirebaseAuth.instance;
+                      final result = await auth.signInWithEmailAndPassword(
+                        email: email,
+                        password: password,
+                      );
+                      // ユーザー情報を更新
+                      userState.setUser(result.user!);
+                      // ログインに成功した場合
+                      // チャット画面に遷移＋ログイン画面を破棄
+                      await Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (context) {
+                          return EventListPage();
+                        }),
+                      );
+                    } catch (e) {
+                      // ログインに失敗した場合
+                      setState(() {
+                        infoText = "ログインに失敗しました：${e.toString()}";
+                      });
+                    }
+                  },
+                  child: Text('ログイン', style: TextStyle(color: Colors.white)),
+                  /*style: Theme.of(context)
                       .textTheme
                       .bodyText2!
                       .copyWith(color: kButtonTextColorPrimary, fontSize: 18),
+                ),*/
                 ),
               ),
             ),
