@@ -48,7 +48,7 @@ class _CreateAcountState extends State<CreateAcount> {
               //タイトル
               Container(
                 margin: EdgeInsets.symmetric(
-                  vertical: 60.0,
+                  vertical: 20.0,
                 ),
                 child: Text('アカウントを作ろう！',
                     style:
@@ -63,36 +63,93 @@ class _CreateAcountState extends State<CreateAcount> {
                 ),
                 elevation: 10.0,
                 child: Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(20.0),
                   child: Column(
-                    children: <Widget>[
+                    children: <Widget>[ 
                       //ユーザー入力
-                      TextFormField(
+                    Container(
+                      margin: EdgeInsets.all(8),
+                      child:TextField(
                         decoration: InputDecoration(
-                            labelText: 'ユーザー名',
-                            icon: Icon(Icons.perm_identity)),
+                            labelText: 'Username',
+                            hintText: 'ユーザー名を入力してください',
+                            hintStyle: TextStyle(color: kTextColorSecondary,fontSize: 10),
+                            icon: Icon(Icons.perm_identity),
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(
+                                  color: kAccentColor,
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(
+                                  color: kTextColorSecondary,
+                                ),
+                              ),
+                            ),
+                        obscureText: false,
                         onChanged: (String value) {
                           setState(() {
                             name = value;
                           });
                         },
                       ),
-                      //メールアドレス入力
-                      TextFormField(
+                    ),
+                     //メールアドレス入力
+                    Container(
+                      margin: EdgeInsets.all(8),
+                      child:TextField(
                         decoration: InputDecoration(
-                            labelText: 'メールアドレス', icon: Icon(Icons.email)),
+                            labelText: 'mail', 
+                            icon: Icon(Icons.email),
+                            hintText: 'メールアドレスを入力してください',
+                            hintStyle: TextStyle(color: kTextColorSecondary,fontSize: 10),
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(
+                                  color: kAccentColor,
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(
+                                  color: kTextColorSecondary,
+                                ),
+                              ),
+                            ),
                         onChanged: (String value) {
                           setState(() {
                             email = value;
                           });
                         },
                       ),
+                    ),
                       // パスワード入力
-                      TextFormField(
+                    Container(
+                      margin: EdgeInsets.all(8),
+                      child:TextField(
                         obscureText: _isObscure,
                         decoration: InputDecoration(
-                          labelText: 'パスワード',
+                          labelText: 'password',
                           icon: Icon(Icons.vpn_key),
+                          hintText: 'パスワードを入力してください',
+                          hintStyle: TextStyle(color: kTextColorSecondary,fontSize: 10),
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(
+                              color: kAccentColor,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(
+                              color: kTextColorSecondary,
+                            ),
+                          ),
                           suffixIcon: IconButton(
                             icon: Icon(_isObscure
                                 ? Icons.visibility_off
@@ -110,13 +167,14 @@ class _CreateAcountState extends State<CreateAcount> {
                           });
                         },
                       ),
+                    ),
                       Container(
                         margin: EdgeInsets.all(10),
                         child: Text(infoText),
                       ),
                       //登録ボタン
                       Container(
-                        margin: EdgeInsets.all(10),
+                        margin: EdgeInsets.all(8),
                         child: SizedBox(
                           width: 200,
                           height: 50,
