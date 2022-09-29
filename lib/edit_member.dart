@@ -29,7 +29,7 @@ class FormLabelText extends Container {
 // リスト一覧画面用Widget
 class EditMemberPage extends StatefulWidget {
   // 画面遷移元からのデータを受け取る変数
-  final eventid;
+  final event_id;
   final memberid;
   final name;
   final payment;
@@ -38,7 +38,7 @@ class EditMemberPage extends StatefulWidget {
   // コンストラクタ
   const EditMemberPage(
       {Key? key,
-      required this.eventid,
+      required this.event_id,
       required this.memberid,
       required this.name,
       required this.payment,
@@ -51,7 +51,7 @@ class EditMemberPage extends StatefulWidget {
 class _EditMemberPageState extends State<EditMemberPage> {
   // State
   // イベントのID
-  String eventid = "";
+  String event_id = "";
   // メンバーのID
   String memberid = "";
   // 新しい名前
@@ -67,7 +67,7 @@ class _EditMemberPageState extends State<EditMemberPage> {
   void initState() {
     super.initState();
     // 受け取ったデータを状態を管理する変数に格納
-    eventid = widget.eventid;
+    event_id = widget.event_id;
     memberid = widget.memberid;
     newname = widget.name;
     newpayment = widget.payment.toString();
@@ -130,7 +130,29 @@ class _EditMemberPageState extends State<EditMemberPage> {
                             // 自動フォーカス
                             autofocus: true,
                             // テキスト入力のラベルを設定
-                            decoration: InputDecoration(labelText: "名前"),
+                            decoration: InputDecoration(
+                              labelText: '名前',
+                              icon: Icon(
+                                Icons.badge,
+                              ),
+                              hintText: 'メンバーの名前を入力してください',
+                              hintStyle: TextStyle(
+                                  color: kTextColorSecondary, fontSize: 10),
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(
+                                  color: kAccentColor,
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(
+                                  color: kTextColorSecondary,
+                                ),
+                              ),
+                            ),
                             initialValue: newname,
                             onChanged: (String value) {
                               setState(() {
@@ -144,7 +166,29 @@ class _EditMemberPageState extends State<EditMemberPage> {
                             // 自動フォーカス
                             autofocus: true,
                             // テキスト入力のラベルを設定
-                            decoration: InputDecoration(labelText: "金額"),
+                            decoration: InputDecoration(
+                              labelText: '金額',
+                              icon: Icon(
+                                Icons.money,
+                              ),
+                              hintText: '金額を数字で入力してください',
+                              hintStyle: TextStyle(
+                                  color: kTextColorSecondary, fontSize: 10),
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(
+                                  color: kAccentColor,
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(
+                                  color: kTextColorSecondary,
+                                ),
+                              ),
+                            ),
                             initialValue: newpayment,
                             onChanged: (String value) {
                               setState(() {
@@ -154,22 +198,38 @@ class _EditMemberPageState extends State<EditMemberPage> {
                           ),
                           const SizedBox(height: 10),
 
-                          FormLabelText('期限'),
-                          Row(
-                            children: <Widget>[
-                              Text(outputFormat.format(newdeadline)),
-                              IconButton(
-                                  onPressed: () {
-                                    _DeadlinePicker(context);
-                                  },
-                                  icon: Icon(
-                                    Icons.edit_calendar,
-                                  )),
-                            ],
-                          ),
+                          // 日付の入力ボックス
                           Container(
-                            height: 1.0,
-                            color: Colors.grey,
+                            child: InputDecorator(
+                              decoration: InputDecoration(
+                                icon: Icon(Icons.edit_calendar),
+                                border: InputBorder.none,
+                              ),
+                              child: InkWell(
+                                borderRadius: BorderRadius.circular(8),
+                                child: Container(
+                                  child: InputDecorator(
+                                    decoration: InputDecoration(
+                                      labelText: '支払期限',
+                                      floatingLabelBehavior:
+                                          FloatingLabelBehavior.always,
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                        borderSide: BorderSide(
+                                          color: kTextColorSecondary,
+                                        ),
+                                      ),
+                                    ),
+                                    child: Text(
+                                        outputFormat.format(newdeadline),
+                                        textAlign: TextAlign.left),
+                                  ),
+                                ),
+                                onTap: () {
+                                  _DeadlinePicker(context);
+                                },
+                              ),
+                            ),
                           ),
 
                           const SizedBox(height: 30),
@@ -191,7 +251,7 @@ class _EditMemberPageState extends State<EditMemberPage> {
                                   try {
                                     await FirebaseFirestore.instance
                                         .collection('events')
-                                        .doc(eventid)
+                                        .doc(event_id)
                                         .collection('participants')
                                         .doc(memberid)
                                         .update({

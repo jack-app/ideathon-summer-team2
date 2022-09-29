@@ -121,7 +121,29 @@ class _AddMemberPageState extends State<AddMemberPage> {
                                 // 自動フォーカス
                                 autofocus: true,
                                 // テキスト入力のラベルを設定
-                                decoration: InputDecoration(labelText: "名前"),
+                                decoration: InputDecoration(
+                                  labelText: '名前',
+                                  icon: Icon(
+                                    Icons.badge,
+                                  ),
+                                  hintText: 'メンバーの名前を入力してください',
+                                  hintStyle: TextStyle(
+                                      color: kTextColorSecondary, fontSize: 10),
+                                  floatingLabelBehavior:
+                                      FloatingLabelBehavior.always,
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide(
+                                      color: kAccentColor,
+                                    ),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide(
+                                      color: kTextColorSecondary,
+                                    ),
+                                  ),
+                                ),
                                 initialValue: newname,
                                 onChanged: (String value) {
                                   setState(() {
@@ -135,7 +157,30 @@ class _AddMemberPageState extends State<AddMemberPage> {
                                 // 自動フォーカス
                                 autofocus: true,
                                 // テキスト入力のラベルを設定
-                                decoration: InputDecoration(labelText: "金額"),
+                                decoration: InputDecoration(
+                                  labelText: '金額',
+                                  icon: Icon(
+                                    Icons.money,
+                                  ),
+                                  hintText: '金額を数字で入力してください',
+                                  hintStyle: TextStyle(
+                                      color: kTextColorSecondary, fontSize: 10),
+                                  floatingLabelBehavior:
+                                      FloatingLabelBehavior.always,
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide(
+                                      color: kAccentColor,
+                                    ),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide(
+                                      color: kTextColorSecondary,
+                                    ),
+                                  ),
+                                ),
+
                                 initialValue: newpayment,
                                 onChanged: (String value) {
                                   setState(() {
@@ -144,23 +189,39 @@ class _AddMemberPageState extends State<AddMemberPage> {
                                 },
                               ),
                               const SizedBox(height: 10),
-
-                              FormLabelText('期限'),
-                              Row(
-                                children: <Widget>[
-                                  Text(outputFormat.format(newdeadline)),
-                                  IconButton(
-                                      onPressed: () {
-                                        _DeadlinePicker(context);
-                                      },
-                                      icon: Icon(
-                                        Icons.edit_calendar,
-                                      )),
-                                ],
-                              ),
+                              // 日付の入力ボックス
                               Container(
-                                height: 1.0,
-                                color: Colors.grey,
+                                child: InputDecorator(
+                                  decoration: InputDecoration(
+                                    icon: Icon(Icons.edit_calendar),
+                                    border: InputBorder.none,
+                                  ),
+                                  child: InkWell(
+                                    borderRadius: BorderRadius.circular(8),
+                                    child: Container(
+                                      child: InputDecorator(
+                                        decoration: InputDecoration(
+                                          labelText: '支払期限',
+                                          floatingLabelBehavior:
+                                              FloatingLabelBehavior.always,
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                            borderSide: BorderSide(
+                                              color: kTextColorSecondary,
+                                            ),
+                                          ),
+                                        ),
+                                        child: Text(
+                                            outputFormat.format(newdeadline),
+                                            textAlign: TextAlign.left),
+                                      ),
+                                    ),
+                                    onTap: () {
+                                      _DeadlinePicker(context);
+                                    },
+                                  ),
+                                ),
                               ),
 
                               const SizedBox(height: 30),
