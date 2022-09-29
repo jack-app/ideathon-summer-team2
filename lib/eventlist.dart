@@ -39,6 +39,7 @@ class EventListPage extends StatelessWidget {
                   },
                 ))
           ],
+          automaticallyImplyLeading: false,
         ),
         // データを元にListViewを作成
         body: Column(children: [
