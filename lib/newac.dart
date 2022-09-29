@@ -111,12 +111,12 @@ class _CreateAcountState extends State<CreateAcount> {
                         },
                       ),
                       Container(
-                        margin: EdgeInsets.all(15),
+                        margin: EdgeInsets.all(10),
                         child: Text(infoText),
                       ),
                       //登録ボタン
                       Container(
-                        margin: EdgeInsets.all(30),
+                        margin: EdgeInsets.all(10),
                         child: SizedBox(
                           width: 200,
                           height: 50,
