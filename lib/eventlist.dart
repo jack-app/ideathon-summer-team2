@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/start.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'main.dart';
@@ -21,6 +22,23 @@ class EventListPage extends StatelessWidget {
         // AppBarを表示し、タイトルも設定
         appBar: AppBar(
           title: Text('イベント一覧'),
+          actions: [
+            Container(
+                padding: EdgeInsets.all(12.0),
+                child: InkWell(
+                  child: Row(
+                    children: [Icon(Icons.logout), Text('ログアウト')],
+                  ),
+                  onTap: () async {
+                    await FirebaseAuth.instance.signOut();
+                    await Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) {
+                        return TitlePage();
+                      }),
+                    );
+                  },
+                ))
+          ],
         ),
         // データを元にListViewを作成
         body: Column(children: [
