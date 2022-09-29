@@ -89,209 +89,209 @@ class _MemberRegisterPageState extends State<MemberRegisterPage> {
       ),
       // ListViewを使いリスト一覧を表示
       body: Column(children: [
-        Padding(
-            padding: EdgeInsets.all(16),
-            child: Text(
-              '参加するメンバーの情報を登録しよう',
-              style: TextStyle(
-                fontSize: 18,
-              ),
-            )),
-
         // メンバーのフォーム
         Padding(
-            padding: EdgeInsets.only(left: 16.0, right: 16.0),
+            padding: EdgeInsets.only(top: 32.0, left: 16.0, right: 16.0),
             child: Card(
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                ),
-                elevation: 10.0,
-                child: Padding(
-                    padding: const EdgeInsets.only(
-                        top: 16.0, left: 16.0, right: 16.0),
-                    child: Column(
-                      children: <Widget>[
-                        // 名前のフォーム
-                        TextFormField(
-                          // コントローラー
-                          controller: _memberNameController,
-                          // 自動フォーカス
-                          autofocus: true,
-                          // テキスト入力のラベルを設定
-                          decoration: InputDecoration(
-                            labelText: '名前',
-                            icon: Icon(
-                              Icons.badge,
-                            ),
-                            hintText: 'メンバーの名前を入力してください',
-                            hintStyle: TextStyle(
-                                color: kTextColorSecondary, fontSize: 10),
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: BorderSide(
-                                color: kAccentColor,
-                              ),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: BorderSide(
-                                color: kTextColorSecondary,
-                              ),
-                            ),
-                          ),
-                          onChanged: (String value) {
-                            setState(() {
-                              NewMemberName = value;
-                            });
-                          },
-                        ),
-                        const SizedBox(height: 10),
-
-                        // 金額のフォーム
-                        TextFormField(
-                          // コントローラー
-                          controller: _memberPaymentController,
-                          // 数字入力指定
-                          keyboardType: TextInputType.number,
-                          // 自動フォーカス
-                          autofocus: true,
-                          // テキスト入力のラベルを設定
-                          decoration: InputDecoration(
-                            labelText: '金額',
-                            icon: Icon(
-                              Icons.money,
-                            ),
-                            hintText: '金額を数字で入力してください',
-                            hintStyle: TextStyle(
-                                color: kTextColorSecondary, fontSize: 10),
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: BorderSide(
-                                color: kAccentColor,
-                              ),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: BorderSide(
-                                color: kTextColorSecondary,
-                              ),
-                            ),
-                          ),
-                          onChanged: (String value) {
-                            setState(() {
-                              NewMemberPaymentStr = value;
-                            });
-                          },
-                        ),
-                        const SizedBox(height: 10),
-
-                        // 日付の入力ボックス
-                        Container(
-                          child: InputDecorator(
+              color: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0),
+              ),
+              elevation: 10.0,
+              child: ExpansionTile(
+                initiallyExpanded: true,
+                title: Text("メンバー入力フォーム"),
+                children: [
+                  Padding(
+                      padding: const EdgeInsets.only(
+                          top: 16.0, left: 16.0, right: 16.0),
+                      child: Column(
+                        children: <Widget>[
+                          // 名前のフォーム
+                          TextFormField(
+                            // コントローラー
+                            controller: _memberNameController,
+                            // 自動フォーカス
+                            autofocus: true,
+                            // テキスト入力のラベルを設定
                             decoration: InputDecoration(
-                              icon: Icon(Icons.edit_calendar),
-                              border: InputBorder.none,
-                            ),
-                            child: InkWell(
-                              borderRadius: BorderRadius.circular(8),
-                              child: Container(
-                                child: InputDecorator(
-                                  decoration: InputDecoration(
-                                    labelText: '支払期限',
-                                    floatingLabelBehavior:
-                                        FloatingLabelBehavior.always,
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                      borderSide: BorderSide(
-                                        color: kTextColorSecondary,
-                                      ),
-                                    ),
-                                  ),
-                                  child: Text(
-                                      outputFormat.format(NewMemberDeadline),
-                                      textAlign: TextAlign.left),
+                              labelText: '名前',
+                              icon: Icon(
+                                Icons.badge,
+                              ),
+                              hintText: 'メンバーの名前を入力してください',
+                              hintStyle: TextStyle(
+                                  color: kTextColorSecondary, fontSize: 10),
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(
+                                  color: kAccentColor,
                                 ),
                               ),
-                              onTap: () {
-                                _DeadlinePicker(context);
-                              },
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(
+                                  color: kTextColorSecondary,
+                                ),
+                              ),
+                            ),
+                            onChanged: (String value) {
+                              setState(() {
+                                NewMemberName = value;
+                              });
+                            },
+                          ),
+                          const SizedBox(height: 10),
+
+                          // 金額のフォーム
+                          TextFormField(
+                            // コントローラー
+                            controller: _memberPaymentController,
+                            // 数字入力指定
+                            keyboardType: TextInputType.number,
+                            // 自動フォーカス
+                            autofocus: true,
+                            // テキスト入力のラベルを設定
+                            decoration: InputDecoration(
+                              labelText: '金額',
+                              icon: Icon(
+                                Icons.money,
+                              ),
+                              hintText: '金額を数字で入力してください',
+                              hintStyle: TextStyle(
+                                  color: kTextColorSecondary, fontSize: 10),
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(
+                                  color: kAccentColor,
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(
+                                  color: kTextColorSecondary,
+                                ),
+                              ),
+                            ),
+                            onChanged: (String value) {
+                              setState(() {
+                                NewMemberPaymentStr = value;
+                              });
+                            },
+                          ),
+                          const SizedBox(height: 10),
+
+                          // 日付の入力ボックス
+                          Container(
+                            child: InputDecorator(
+                              decoration: InputDecoration(
+                                icon: Icon(Icons.edit_calendar),
+                                border: InputBorder.none,
+                              ),
+                              child: InkWell(
+                                borderRadius: BorderRadius.circular(8),
+                                child: Container(
+                                  child: InputDecorator(
+                                    decoration: InputDecoration(
+                                      labelText: '支払期限',
+                                      floatingLabelBehavior:
+                                          FloatingLabelBehavior.always,
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                        borderSide: BorderSide(
+                                          color: kTextColorSecondary,
+                                        ),
+                                      ),
+                                    ),
+                                    child: Text(
+                                        outputFormat.format(NewMemberDeadline),
+                                        textAlign: TextAlign.left),
+                                  ),
+                                ),
+                                onTap: () {
+                                  _DeadlinePicker(context);
+                                },
+                              ),
                             ),
                           ),
-                        ),
 
-                        const SizedBox(height: 16),
+                          const SizedBox(height: 16),
 
-                        ElevatedButton.icon(
-                          icon: const Icon(
-                            Icons.add,
-                            color: Colors.white,
-                          ),
-                          label: const Text('メンバー追加'),
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.blue,
-                            onPrimary: Colors.white,
-                            fixedSize: Size.fromHeight(30),
-                          ),
-                          onPressed: () {
-                            if (NewMemberName != "" &&
-                                NewMemberPaymentStr != "") {
-                              try {
-                                setState(() {
-                                  // メンバーの追加
-                                  MemberList.add({
-                                    'name': NewMemberName, // 名前
-                                    'payment':
-                                        int.parse(NewMemberPaymentStr), // 支払金額
-                                    'deadline': NewMemberDeadline,
+                          ElevatedButton.icon(
+                            icon: const Icon(
+                              Icons.add,
+                              color: Colors.white,
+                            ),
+                            label: const Text('メンバー追加'),
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.blue,
+                              onPrimary: Colors.white,
+                              fixedSize: Size.fromHeight(30),
+                            ),
+                            onPressed: () {
+                              if (NewMemberName != "" &&
+                                  NewMemberPaymentStr != "") {
+                                try {
+                                  setState(() {
+                                    // メンバーの追加
+                                    MemberList.add({
+                                      'name': NewMemberName, // 名前
+                                      'payment': int.parse(
+                                          NewMemberPaymentStr), // 支払金額
+                                      'deadline': NewMemberDeadline,
+                                    });
+                                    // 新しいメンバーの値を初期化
+                                    NewMemberName = "";
+                                    NewMemberPaymentStr = "";
+                                    NewMemberDeadline = _EventDate;
+                                    FormExceptionText = "";
                                   });
-                                  // 新しいメンバーの値を初期化
-                                  NewMemberName = "";
-                                  NewMemberPaymentStr = "";
-                                  NewMemberDeadline = _EventDate;
-                                  FormExceptionText = "";
-                                });
-                                // テキストフィールドの入力を削除
-                                _memberNameController.clear();
-                                _memberPaymentController.clear();
-                              } catch (e) {
+                                  // テキストフィールドの入力を削除
+                                  _memberNameController.clear();
+                                  _memberPaymentController.clear();
+                                } catch (e) {
+                                  setState(() {
+                                    //例外が発生したら実行する処理
+                                    FormExceptionText = "金額は数字で入力してください";
+                                  });
+                                }
+                              } else if (NewMemberName != "") {
                                 setState(() {
                                   //例外が発生したら実行する処理
-                                  FormExceptionText = "金額は数字で入力してください";
+                                  FormExceptionText = "金額が未入力です";
+                                });
+                              } else if (NewMemberPaymentStr != "") {
+                                setState(() {
+                                  //例外が発生したら実行する処理
+                                  FormExceptionText = "名前が未入力です";
+                                });
+                              } else {
+                                setState(() {
+                                  //例外が発生したら実行する処理
+                                  FormExceptionText = "名前・金額が未入力です";
                                 });
                               }
-                            } else if (NewMemberName != "") {
-                              setState(() {
-                                //例外が発生したら実行する処理
-                                FormExceptionText = "金額が未入力です";
-                              });
-                            } else if (NewMemberPaymentStr != "") {
-                              setState(() {
-                                //例外が発生したら実行する処理
-                                FormExceptionText = "名前が未入力です";
-                              });
-                            } else {
-                              setState(() {
-                                //例外が発生したら実行する処理
-                                FormExceptionText = "名前・金額が未入力です";
-                              });
-                            }
-                          },
-                        ),
-                        // 注意書きのテキスト
-                        Padding(
-                          padding: EdgeInsets.all(10.0),
-                          child: Text(
-                            FormExceptionText,
-                            style: TextStyle(
-                              color: Colors.red,
+                            },
+                          ),
+                          // 注意書きのテキスト
+                          Padding(
+                            padding: EdgeInsets.all(10.0),
+                            child: Text(
+                              FormExceptionText,
+                              style: TextStyle(
+                                color: Colors.red,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    )))),
+                        ],
+                      ))
+                ],
+              ),
+            )),
         // メンバーのカードとフォームのスタート
         Padding(
           padding: EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
